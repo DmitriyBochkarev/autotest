@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from termcolor import colored
+
 from tests.base_page import BasePage
 
 
@@ -45,10 +46,12 @@ class MainPage(BasePage):
         return first_pic
 
     def pic_preview(self):
+        """Превью картинки"""
         pic_preview = self.driver.find_element(By.CLASS_NAME, 'MMImage-Preview')
         return pic_preview
 
     def pic_name(self):
+        """Получить название первой картинки"""
         pic_name = self.driver.find_element(By.CLASS_NAME, 'MMImage-Preview').get_attribute('src')
         return pic_name
 
@@ -78,7 +81,7 @@ class MainPage(BasePage):
         return element
 
     def find_search_field(self, timeout=10):
-        """ Find element on the page. """
+        """ Найти поле поиска """
 
         element = None
         attr = {'id': 'text'}
@@ -93,7 +96,7 @@ class MainPage(BasePage):
         return element
 
     def suggest(self, timeout=10):
-        """ Find element on the page. """
+        """ Найти вспомогательное меню """
 
         element = None
         attr = {'class_name': 'mini-suggest__popup-content'}
@@ -108,16 +111,11 @@ class MainPage(BasePage):
         return element
 
     def search_results(self):
-        """Кнопка назад"""
+        """Результаты поиска"""
         search_results = self.driver.find_element(By.CLASS_NAME, 'serp-list.serp-list_left_yes')
         return search_results.get_attribute('aria-label')
 
-    def first_result(self):
-        """Кнопка назад"""
-        first_result = self.driver.find_element(By.CLASS_NAME, 'serp-list.serp-list_left_yes')
-        return first_result.get_attribute('aria-label')
-
     def first_url(self):
-        """Кнопка назад"""
+        """Ссылка на первый результат поиска"""
         first_url = self.driver.find_element(By.XPATH, '//li[@data-cid="0"]//a')
         return first_url.get_attribute('href')

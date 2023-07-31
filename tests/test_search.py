@@ -26,11 +26,11 @@ def test_enter():
 def test_search_results():
     # Проверить, что появилась страница результатов поиска
     label_results = page.search_results()
-    assert label_results == 'Результаты поиска'
+    assert label_results == 'Результаты поиска', "Страница результатов поиска не открылась"
 
 def test_first_result():
-    # TODO Проверить 1 ссылка ведет на сайт tensor.ru
+    # Проверить 1 ссылка ведет на сайт tensor.ru
     first_url = page.first_url()
-    assert first_url == 'https://tensor.ru/'
+    assert first_url == 'https://tensor.ru/', "Первая ссылка ведет не на Тензор"
 
 
