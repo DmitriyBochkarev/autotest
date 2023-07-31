@@ -1,8 +1,10 @@
 from tests.page_yandex import MainPage
 from selenium import webdriver
 
-page = MainPage("https://ya.ru/")
+page = MainPage(webdriver.Chrome(), "https://ya.ru/")
 page.implicitly_wait(5)
+page.get_url()
+page.maximize_window()
 
 # переменные для проверок
 first_category = ""
@@ -13,7 +15,7 @@ back_pic_name = ""
 
 def test_search_field_click():
     """клик по полю поиска, чтобы появилось быстрое меню"""
-    page.get("https://ya.ru/")
+
     # Проверить, что кнопка меню присутствует на странице
 
     page.search_field().click()  # клик по полю поиска, чтобы появилось быстрое меню
@@ -29,7 +31,6 @@ def test_menu_click():
 def test_element_pic_click():
     """клик на кнопку картинки"""
     page.element_pic().click()  # клик на кнопку картинки, открывается в новой вкладке
-    page.maximize_window()
     page.new_window()
 
     # Проверить, что перешли на url https://yandex.ru/images/
