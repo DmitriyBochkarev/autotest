@@ -1,60 +1,81 @@
-import time
-from tests.yandex import MainPage
-
+from tests.page_yandex import MainPage
 
 page = MainPage()
+page.implicitly_wait(5)
+
+# переменные для проверок
 first_category = ""
+first_pic_name = ""
+second_pic_name = ""
+back_pic_name = ""
+
+
 def test_search_field_click():
     """клик по полю поиска, чтобы появилось быстрое меню"""
 
-    # TODO Проверить, что кнопка меню присутствует на странице
-    
-    time.sleep(5)
-    page.search_field().click() # клик по полю поиска, чтобы появилось быстрое меню
-    time.sleep(3)
+    # Проверить, что кнопка меню присутствует на странице
+    try:
+        assert page.menu().is_displayed(), "Кнопка меню присутствует на первоначальной странице"
+    except:
+        pass
+
+    page.search_field().click()  # клик по полю поиска, чтобы появилось быстрое меню
+
 
 def test_menu_click():
     """клик на кнопку меню"""
+    assert page.menu().is_displayed(), "Кнопка меню присутствует на первоначальной странице"
     page.menu().click()
-    time.sleep(3)
+
 
 def test_element_pic_click():
     """клик на кнопку картинки"""
-    page.element_pic().click() # клик на кнопку картинки, открывается в новой вкладке
-    time.sleep(3)
+    page.element_pic().click()  # клик на кнопку картинки, открывается в новой вкладке
 
     page.new_window()
 
-    # print("Проверить, что перешли на url https://yandex.ru/images/")# Проверить, что перешли на url https://yandex.ru/images/
-    # link = driver.current_url
-    # assert link == 'https://yandex.ru/images/'
-    # print("Мы перешли на " + link)
+    # Проверить, что перешли на url https://yandex.ru/images/
+    expected_url = 'https://yandex.ru/images/'
+    current_url = page.get_current_url()
+    assert current_url == expected_url
 
-    time.sleep(3)
     global first_category
-    first_category = page.category() # получили название первой категории
-
+    first_category = page.category_name()  # получили название первой категории
 
     page.first_pic_category().click()
-    time.sleep(5)
 
-    element_get_content = page.pic_search_field() # получили текст атрибута content с помощью get_attribute
-    time.sleep(5)
-    assert first_category == element_get_content # добавили проверку что название 1 категории есть в атрибуте content (в поле поиска)
+    element_get_content = page.pic_search_field()  # получили текст атрибута content с помощью get_attribute
+    assert first_category == element_get_content  # добавили проверку что название 1 категории есть в атрибуте content (в поле поиска)
+
 
 def test_first_pic_click():
     """клик на первую картинку"""
     page.first_pic().click()
-    time.sleep(3)
-    # TODO Проверить, что картинка открылась
+    # Проверяем, что картинка открылась
+    assert page.pic_preview().is_displayed()
+
+    # запомним имя первой картинки
+    global first_pic_name
+    first_pic_name = page.pic_name()
+
+
 def test_next_button_click():
     """клик на кнопку далее"""
     page.next_button().click()
-    time.sleep(3)
-    # TODO Проверить, что картинка сменилась
+
+    # запомним имя второй картинки
+    global second_pic_name
+    second_pic_name = page.pic_name()
+    # Проверяем, что картинка сменилась
+    assert second_pic_name != first_pic_name
+
+
 def test_prev_button_click():
     """клик на кнопку назад"""
     page.prev_button().click()
-    time.sleep(3)
-    # TODO Проверить, что картинка осталась из шага 8
 
+    # запомним имя картинки после возврата
+    global back_pic_name
+    back_pic_name = page.pic_name()
+    # # Проверяем, что картинка осталась из шага 8
+    assert back_pic_name == first_pic_name

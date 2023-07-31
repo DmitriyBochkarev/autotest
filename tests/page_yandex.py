@@ -8,6 +8,9 @@ class MainPage:
     driver.maximize_window()
     open_yandex = driver.get("https://ya.ru/")
 
+    def implicitly_wait(self, time):
+        self.driver.implicitly_wait(time)
+
     def search_field(self):
         """Поле поиска"""
         search_field = self.driver.find_element(By.ID, "text")
@@ -29,10 +32,14 @@ class MainPage:
         current_window = self.driver.current_window_handle
         return self.driver.switch_to.window(new_window)
 
-    def category(self):
+    def get_current_url(self):
+        get_current_url = self.driver.current_url
+        return get_current_url
+
+    def category_name(self):
         """Название первой категории"""
-        category = self.driver.find_element(By.CLASS_NAME, 'PopularRequestList-Item.PopularRequestList-Item_pos_0')
-        return category.get_attribute('data-grid-text')
+        category_name = self.driver.find_element(By.CLASS_NAME, 'PopularRequestList-Item.PopularRequestList-Item_pos_0')
+        return category_name.get_attribute('data-grid-text')
 
     def first_pic_category(self):
         """Ссылка первой категории"""
@@ -49,6 +56,14 @@ class MainPage:
         """Первая картинка"""
         first_pic = self.driver.find_element(By.CLASS_NAME, 'serp-item_pos_0')
         return first_pic
+
+    def pic_preview(self):
+        pic_preview = self.driver.find_element(By.CLASS_NAME, 'MMImage-Preview')
+        return pic_preview
+
+    def pic_name(self):
+        pic_name = self.driver.find_element(By.CLASS_NAME, 'MMImage-Preview').get_attribute('src')
+        return pic_name
 
     def next_button(self):
         """Кнопка вперед"""
