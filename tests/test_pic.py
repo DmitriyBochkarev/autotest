@@ -1,6 +1,7 @@
 from tests.page_yandex import MainPage
+from selenium import webdriver
 
-page = MainPage()
+page = MainPage("https://ya.ru/")
 page.implicitly_wait(5)
 
 # переменные для проверок
@@ -12,14 +13,11 @@ back_pic_name = ""
 
 def test_search_field_click():
     """клик по полю поиска, чтобы появилось быстрое меню"""
-
+    page.get("https://ya.ru/")
     # Проверить, что кнопка меню присутствует на странице
-    try:
-        assert page.menu().is_displayed(), "Кнопка меню присутствует на первоначальной странице"
-    except:
-        pass
 
     page.search_field().click()  # клик по полю поиска, чтобы появилось быстрое меню
+    page.find_menu()
 
 
 def test_menu_click():
@@ -31,7 +29,7 @@ def test_menu_click():
 def test_element_pic_click():
     """клик на кнопку картинки"""
     page.element_pic().click()  # клик на кнопку картинки, открывается в новой вкладке
-
+    page.maximize_window()
     page.new_window()
 
     # Проверить, что перешли на url https://yandex.ru/images/
@@ -44,8 +42,8 @@ def test_element_pic_click():
 
     page.first_pic_category().click()
 
-    element_get_content = page.pic_search_field()  # получили текст атрибута content с помощью get_attribute
-    assert first_category == element_get_content  # добавили проверку что название 1 категории есть в атрибуте content (в поле поиска)
+    element_get_content = page.pic_search_field()  # получили текст из поисковой строки
+    assert first_category == element_get_content  # добавили проверку что название 1 категории есть в в поле поиска
 
 
 def test_first_pic_click():

@@ -1,15 +1,29 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from termcolor import colored
+from tests.base_page import BasePage
+
+from selenium import webdriver
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
-class MainPage:
 
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    open_yandex = driver.get("https://ya.ru/")
+class MainPage(WebDriver):
 
-    def implicitly_wait(self, time):
-        self.driver.implicitly_wait(time)
+    def __init__(self, url):
+        super().__init__()
+        self.url = url
+
+
+    options = Options()
+    options.page_load_strategy = 'normal'
+    options.binary_location = 'C:/chromedriver.exe'
+    driver = webdriver.Chrome(options=options)
 
     def search_field(self):
         """Поле поиска"""
@@ -43,14 +57,14 @@ class MainPage:
 
     def first_pic_category(self):
         """Ссылка первой категории"""
-        first_pic_category = self.driver.find_element(By.CLASS_NAME, 'PopularRequestList-Item.PopularRequestList-Item_pos_0')
+        first_pic_category = self.driver.find_element(By.CLASS_NAME,
+                                                      'PopularRequestList-Item.PopularRequestList-Item_pos_0')
         return first_pic_category
 
     def pic_search_field(self):
         """Поле поиска в картинках"""
         pic_search_field = self.driver.find_element(By.CLASS_NAME, 'input__control.mini-suggest__input')
         return pic_search_field.get_attribute('value')
-        # return pic_search_field
 
     def first_pic(self):
         """Первая картинка"""
@@ -74,3 +88,18 @@ class MainPage:
         """Кнопка назад"""
         prev_button = self.driver.find_element(By.CLASS_NAME, 'MediaViewer_theme_fiji-ButtonPrev')
         return prev_button
+
+    def find_menu(self, timeout=10):
+        """ Find element on the page. """
+
+        element = None
+        attr = {'link_text': 'Все'}
+        locator = (str('link_text').replace('_', ' '), str(attr.get('link_text')))
+        try:
+            element = WebDriverWait(self.driver, timeout).until(
+                EC.presence_of_element_located(locator)
+            )
+        except:
+            print(colored('Element not found on the page!', 'red'))
+
+        return element
