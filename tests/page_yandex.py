@@ -1,124 +1,85 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-from termcolor import colored
 
 from tests.base_page import BasePage
 
 
-class MainPage(BasePage):
-
-    def search_field(self):
-        """Поле поиска"""
-        search_field = self.driver.find_element(By.ID, "text")
-        return search_field
-
-    def menu(self):
-        """Кнопка меню (все)"""
-        menu = self.driver.find_element(By.LINK_TEXT, "Все")
-        return menu
+class YaPage(BasePage):
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.url = "https://ya.ru/"
 
     def element_pic(self):
         """Кнопка Картинки"""
-        element_pic = self.driver.find_element(By.LINK_TEXT, "Картинки")
-        return element_pic
+        element = self.driver.find_element(By.LINK_TEXT, "Картинки")
+        return element
 
     def category_name(self):
         """Название первой категории"""
-        category_name = self.driver.find_element(By.CLASS_NAME, 'PopularRequestList-Item.PopularRequestList-Item_pos_0')
-        return category_name.get_attribute('data-grid-text')
+        element = self.driver.find_element(By.CLASS_NAME, 'PopularRequestList-Item.PopularRequestList-Item_pos_0')
+        return element.get_attribute('data-grid-text')
 
     def first_pic_category(self):
         """Ссылка первой категории"""
-        first_pic_category = self.driver.find_element(By.CLASS_NAME,
-                                                      'PopularRequestList-Item.PopularRequestList-Item_pos_0')
-        return first_pic_category
+        element = self.driver.find_element(By.CLASS_NAME,
+                                           'PopularRequestList-Item.PopularRequestList-Item_pos_0')
+        return element
 
     def pic_search_field(self):
         """Поле поиска в картинках"""
-        pic_search_field = self.driver.find_element(By.CLASS_NAME, 'input__control.mini-suggest__input')
-        return pic_search_field.get_attribute('value')
+        element = self.driver.find_element(By.CLASS_NAME, 'input__control.mini-suggest__input')
+        return element.get_attribute('value')
 
     def first_pic(self):
         """Первая картинка"""
-        first_pic = self.driver.find_element(By.CLASS_NAME, 'serp-item_pos_0')
-        return first_pic
+        element = self.driver.find_element(By.CLASS_NAME, 'serp-item_pos_0')
+        return element
 
     def pic_preview(self):
         """Превью картинки"""
-        pic_preview = self.driver.find_element(By.CLASS_NAME, 'MMImage-Preview')
-        return pic_preview
+        element = self.driver.find_element(By.CLASS_NAME, 'MMImage-Preview')
+        return element
 
     def pic_name(self):
         """Получить название первой картинки"""
-        pic_name = self.driver.find_element(By.CLASS_NAME, 'MMImage-Preview').get_attribute('src')
-        return pic_name
+        element = self.driver.find_element(By.CLASS_NAME, 'MMImage-Preview').get_attribute('src')
+        return element
 
     def next_button(self):
         """Кнопка вперед"""
-        next_button = self.driver.find_element(By.CLASS_NAME, 'MediaViewer_theme_fiji-ButtonNext')
-        return next_button
+        element = self.driver.find_element(By.CLASS_NAME, 'MediaViewer_theme_fiji-ButtonNext')
+        return element
 
     def prev_button(self):
         """Кнопка назад"""
-        prev_button = self.driver.find_element(By.CLASS_NAME, 'MediaViewer_theme_fiji-ButtonPrev')
-        return prev_button
-
-    def find_menu(self, timeout=10):
-        """ Find element on the page. """
-
-        element = None
-        attr = {'link_text': 'Все'}
-        locator = (str('link_text').replace('_', ' '), str(attr.get('link_text')))
-        try:
-            element = WebDriverWait(self.driver, timeout).until(
-                EC.presence_of_element_located(locator)
-            )
-            print('The menu button is on the page after click to search field')
-        except:
-            print(colored('Menu button not found on the page', 'red'))
-
+        element = self.driver.find_element(By.CLASS_NAME, 'MediaViewer_theme_fiji-ButtonPrev')
         return element
 
-    def find_search_field(self, timeout=10):
+    def find_menu(self):
         """ Найти поле поиска """
 
-        element = None
-        attr = {'id': 'text'}
-        locator = (str('id').replace('_', ' '), str(attr.get('id')))
-        try:
-            element = WebDriverWait(self.driver, timeout).until(
-                EC.presence_of_element_located(locator)
-            )
-            print('The search field is present on the page')
-        except:
-            print(colored('Element not found on the page!', 'red'))
-
+        locator = (By.LINK_TEXT, 'Все')
+        element = self.find_element(locator)
         return element
 
-    def suggest(self, timeout=10):
-        """ Найти вспомогательное меню """
+    def find_search_field(self):
+        """ Найти поле поиска """
 
-        element = None
-        attr = {'class_name': 'mini-suggest__popup-content'}
-        locator = (str('class_name').replace('_', ' '), str(attr.get('class_name')))
-        try:
-            element = WebDriverWait(self.driver, timeout).until(
-                EC.presence_of_element_located(locator)
-            )
-            print('there is a table with hints')
-        except:
-            print(colored('table with hints not found on the page!', 'red'))
+        locator = (By.ID, 'text')
+        element = self.find_element(locator)
+        return element
 
+    def suggest(self):
+        locator = (By.CLASS_NAME, 'mini-suggest__popup-content')
+        element = self.find_element(locator)
         return element
 
     def search_results(self):
         """Результаты поиска"""
-        search_results = self.driver.find_element(By.CLASS_NAME, 'serp-list.serp-list_left_yes')
-        return search_results.get_attribute('aria-label')
+        locator = (By.CLASS_NAME, 'serp-list.serp-list_left_yes')
+        element = self.find_element(locator)
+        return element.get_attribute('aria-label')
 
     def first_url(self):
         """Ссылка на первый результат поиска"""
-        first_url = self.driver.find_element(By.XPATH, '//li[@data-cid="0"]//a')
-        return first_url.get_attribute('href')
+        element = self.driver.find_element(By.XPATH, '//li[@data-cid="0"]//a')
+        return element.get_attribute('href')

@@ -1,58 +1,60 @@
-from tests.page_yandex import MainPage
+from tests.page_yandex import YaPage
 
 
 class TestPic:
     def test_pic(self, web_browser):
-        page = MainPage(web_browser, "https://ya.ru/")
+        # 1) Зайти на ya.ru
+        page = YaPage(web_browser)
         page.get_url()
 
-        # Проверить, что кнопка меню присутствует на странице
+        # 2) Проверить, что кнопка меню присутствует на странице
         page.find_menu()
-        page.search_field().click()  # клик по полю поиска, чтобы появилось быстрое меню
-
+        # клик по полю поиска, чтобы появилось быстрое меню
+        page.find_search_field().click()
+        # Повторно проверяем, что кнопка меню присутствует на странице
         page.find_menu()
 
-        # клик на кнопку меню
-        page.menu().click()
-
-        # клик на кнопку картинки
+        # 3) Открыть меню
+        page.find_menu().click()
+        # Выбрать картинки
         page.element_pic().click()
         # переключиться на открывшуюся вкладку
         page.new_window()
 
-        # Проверить, что перешли на url https://yandex.ru/images/
+        # 4) Проверить, что перешли на url https://yandex.ru/images/
         expected_url = 'https://yandex.ru/images/'
         current_url = page.get_current_url()
         assert current_url == expected_url, "Мы не перешли на url https://yandex.ru/images/"
 
-        first_category = page.category_name()  # получили название первой категории
+        # Получим название первой категории для последующей проверки
+        first_category = page.category_name()
 
-
+        # 5) Открыть первую категорию
         page.first_pic_category().click()
-        # получим текст из поисковой строки
+
+        #6) Проверить, что название категории отображается в поле поиска
         element_get_content = page.pic_search_field()
         assert first_category == element_get_content, "Названия первой категории нет в поле поиска"
 
-        # клик на первую картинку
+        # 7) Открыть первую картинку
         page.first_pic().click()
-        # Проверяем, что картинка открылась
+
+        # 8) Проверить, что картинка открылась
         assert page.pic_preview().is_displayed(), "Картинка не открылась"
 
-        # запомним имя первой картинки
+        # Запомним имя первой картинки для последующей проверки
         first_pic_name = page.pic_name()
 
-        # клик на кнопку далее
+        # 9) Нажать кнопку вперед
         page.next_button().click()
 
-        # запомним имя второй картинки
+        # 10) Проверить, что картинка сменилась
         second_pic_name = page.pic_name()
-        # Проверяем, что картинка сменилась
         assert second_pic_name != first_pic_name, "Картинка не сменилась"
 
-        # клик на кнопку назад
+        # 11) Нажать назад
         page.prev_button().click()
 
-        # запомним имя картинки после возврата
+        # 12) Проверяем, что картинка осталась из шага 8
         back_pic_name = page.pic_name()
-        # Проверяем, что картинка осталась из шага 8
         assert back_pic_name == first_pic_name, "Картинка не такая же, какая была первой"
