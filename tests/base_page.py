@@ -27,7 +27,7 @@ class BasePage:
         get_current_url = self.driver.current_url
         return get_current_url
 
-    def find_element(self, locator, timeout=5):
+    def find_webelement(self, locator, timeout=5):
         """ Найти элемент' """
 
         element = None
