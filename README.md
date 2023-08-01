@@ -1,4 +1,5 @@
-# autotest
+# autotest 1.2
+### Программа предназначена для автоматизированного тестирования сайта ya.ru
 # Для запуска из командной строки на windows:
 ## Открыть командную строку и создать папку проекта
 ## Установить виртуальное окружение
@@ -19,7 +20,7 @@ git pull https://github.com/DmitriyBochkarev/autotest.git
 ```
 ## Скачать chromedriver.exe (версия 114.0.5735.90) 
 https://chromedriver.chromium.org/downloads
-## Добавить chromedriver.exe в папку tests проекта
+## Добавить chromedriver.exe в корневую папку С:\
 ## Запуск тестов из командной строки windows
 ```commandline
 pytest
