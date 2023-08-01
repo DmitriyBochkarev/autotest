@@ -75,8 +75,9 @@ class MainPage(BasePage):
             element = WebDriverWait(self.driver, timeout).until(
                 EC.presence_of_element_located(locator)
             )
+            print('The menu button is on the page after click to search field')
         except:
-            print(colored('Element not found on the page!', 'red'))
+            print(colored('Menu button not found on the page', 'red'))
 
         return element
 
@@ -90,6 +91,7 @@ class MainPage(BasePage):
             element = WebDriverWait(self.driver, timeout).until(
                 EC.presence_of_element_located(locator)
             )
+            print('The search field is present on the page')
         except:
             print(colored('Element not found on the page!', 'red'))
 
@@ -105,8 +107,9 @@ class MainPage(BasePage):
             element = WebDriverWait(self.driver, timeout).until(
                 EC.presence_of_element_located(locator)
             )
+            print('there is a table with hints')
         except:
-            print(colored('Element not found on the page!', 'red'))
+            print(colored('table with hints not found on the page!', 'red'))
 
         return element
 
