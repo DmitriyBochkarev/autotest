@@ -28,3 +28,4 @@ pytest
 ```commandline
 pytest --html=report.html --self-contained-html
 ```
+### Можете посмотреть созданный отчет в папке проекта
