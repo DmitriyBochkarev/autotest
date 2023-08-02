@@ -11,18 +11,16 @@ class TestSearch:
         page.find_search_field()
 
         # 3) Ввести в поиск Тензор
-        page.find_search_field().send_keys('Тензор')
+        page.text_tensor()
 
         # 4) Проверить, что появилась таблица с подсказками (suggest)
         page.suggest()
 
         # 5) Нажать enter
-        page.find_search_field().send_keys("\n")
+        page.press_enter()
 
         # 6) Проверить, что появилась страница результатов поиска
-        label_results = page.search_results()
-        assert label_results == 'Результаты поиска', "Страница результатов поиска не открылась"
+        page.check_search_results()
 
         # 7) Проверить 1 ссылка ведет на сайт tensor.ru
-        first_url = page.first_url()
-        assert first_url == 'https://tensor.ru/', "Первая ссылка ведет не на Тензор"
+        page.check_first_url()

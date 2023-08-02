@@ -9,9 +9,6 @@ class BasePage:
         self.driver = driver
         self.url = ''
 
-    def maximize_window(self):
-        self.driver.maximize_window()
-
     def get_url(self):
         self.driver.get(self.url)
 
@@ -27,7 +24,7 @@ class BasePage:
         get_current_url = self.driver.current_url
         return get_current_url
 
-    def find_webelement(self, locator, timeout=5):
+    def find_webelement(self, locator, timeout=10):
         """ Найти элемент' """
 
         element = None
