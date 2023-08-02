@@ -1,4 +1,5 @@
 from tests.page_yandex import YaPage
+from tests.page_yandex_search import YaSearchPage
 
 
 class TestSearch:
@@ -20,7 +21,8 @@ class TestSearch:
         page.press_enter()
 
         # 6) Проверить, что появилась страница результатов поиска
-        page.check_search_results()
+        search_page = YaSearchPage(web_browser, web_browser.current_url)
+        search_page.check_search_results()
 
         # 7) Проверить 1 ссылка ведет на сайт tensor.ru
-        page.check_first_url()
+        search_page.check_first_url()

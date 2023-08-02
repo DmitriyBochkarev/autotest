@@ -1,4 +1,5 @@
 from tests.page_yandex import YaPage
+from tests.page_yandex_pictures import YaPicturesPage
 
 
 class TestPic:
@@ -14,28 +15,29 @@ class TestPic:
         page.go_to_pictures()
 
         # 4) Проверить, что перешли на url https://yandex.ru/images/
-        page.check_images_url()
+        pictures_page = YaPicturesPage(web_browser, web_browser.current_url)
+        pictures_page.check_images_url()
 
         # 5) Открыть первую категорию
-        page.first_pic_category_click()
+        pictures_page.first_pic_category_click()
 
         # 6) Проверить, что название категории отображается в поле поиска
-        page.check_text_search_field()
+        pictures_page.check_text_search_field()
 
         # 7) Открыть первую картинку
-        page.first_pic_click()
+        pictures_page.first_pic_click()
 
         # 8) Проверить, что картинка открылась
-        page.pic_preview_check()
+        pictures_page.pic_preview_check()
 
         # 9) Нажать кнопку вперед
-        page.next_button_click()
+        pictures_page.next_button_click()
 
         # 10) Проверить, что картинка сменилась
-        page.check_pic_change()
+        pictures_page.check_pic_change()
 
         # 11) Нажать назад
-        page.prev_button_click()
+        pictures_page.prev_button_click()
 
         # 12) Проверяем, что картинка осталась из шага 8
-        page.check_prev_pic()
+        pictures_page.check_prev_pic()
