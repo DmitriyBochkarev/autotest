@@ -1,5 +1,5 @@
-from tests.base_page import BasePage
-from tests.locators import YaSearchLocators
+from pages.base_page import BasePage
+from pages.locators import YaSearchLocators
 
 
 class YaSearchPage(BasePage):

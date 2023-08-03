@@ -1,5 +1,5 @@
-from tests.base_page import BasePage
-from tests.locators import YaPageLocators
+from pages.base_page import BasePage
+from pages.locators import YaPageLocators
 
 
 class YaPage(BasePage):
@@ -35,6 +35,7 @@ class YaPage(BasePage):
     def check_menu(self):
         """PIC 2 шаг Проверка что меню присутствует на странице"""
         self.find_menu()
+        print("Сначала кнопка меню не найдена, так как она становится видна после клика в поле поиска")
         # клик по полю поиска, чтобы появилось быстрое меню
         self.find_search_field().click()
         # Повторно проверяем, что кнопка меню присутствует на странице
@@ -48,3 +49,9 @@ class YaPage(BasePage):
         self.find_webelement(YaPageLocators.locator_choose_pictures).click()
         # переключиться на открывшуюся вкладку
         self.new_window()
+
+    def check_images_url(self):
+        """PIC 4 шаг Проверка, что перешли на страницу https://ya.ru/images/"""
+        expected_url = 'https://ya.ru/images/'
+        current_url = self.get_current_url()
+        assert current_url == expected_url, "Мы не перешли на url https://ya.ru/images/"

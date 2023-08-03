@@ -1,6 +1,6 @@
-from tests.page_yandex import YaPage
-from tests.page_yandex_search import YaSearchPage
-
+from pages.page_yandex import YaPage
+from pages.page_yandex_search import YaSearchPage
+from conftest import web_browser
 
 class TestSearch:
     def test_search(self, web_browser):
@@ -26,3 +26,4 @@ class TestSearch:
 
         # 7) Проверить 1 ссылка ведет на сайт tensor.ru
         search_page.check_first_url()
+

@@ -1,5 +1,5 @@
-from tests.base_page import BasePage
-from tests.locators import YaPicturesPageLocators
+from pages.base_page import BasePage
+from pages.locators import YaPicturesPageLocators
 
 
 class YaPicturesPage(BasePage):
@@ -12,11 +12,7 @@ class YaPicturesPage(BasePage):
         element = self.find_webelement(YaPicturesPageLocators.locator_pic_name)
         return element
 
-    def check_images_url(self):
-        """PIC 4 шаг Проверка, что перешли на страницу https://yandex.ru/images/"""
-        expected_url = 'https://yandex.ru/images/'
-        current_url = self.get_current_url()
-        assert current_url == expected_url, "Мы не перешли на url https://yandex.ru/images/"
+
 
     def first_pic_category_click(self):
         """PIC 5 шаг Открыть первую категорию"""

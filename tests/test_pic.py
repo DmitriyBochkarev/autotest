@@ -1,5 +1,6 @@
-from tests.page_yandex import YaPage
-from tests.page_yandex_pictures import YaPicturesPage
+from pages.page_yandex import YaPage
+from pages.page_yandex_pictures import YaPicturesPage
+from conftest import web_browser
 
 
 class TestPic:
@@ -15,8 +16,8 @@ class TestPic:
         page.go_to_pictures()
 
         # 4) Проверить, что перешли на url https://yandex.ru/images/
+        page.check_images_url()
         pictures_page = YaPicturesPage(web_browser, web_browser.current_url)
-        pictures_page.check_images_url()
 
         # 5) Открыть первую категорию
         pictures_page.first_pic_category_click()
